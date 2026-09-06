@@ -1,10 +1,10 @@
 [
   {
-    "expression": "/*ESE v2.1.7 [git.tamtaro.de]*/[]",
+    "expression": "/*ESE v2.1.8 [git.tamtaro.de]*/[]",
     "enabled": true
   },
   {
-    "expression": "/*Health Checks*/ merge(health('torrentio-down') ? addon(streams, 'Torrentio') : [], health('tb-down') ? service(streams, 'torbox') : [], health('rd-down') ? service(streams, 'realdebrid') : [], health('pm-down') ? service(streams, 'premiumize') : [])",
+    "expression": "/*Health Checks*/ merge(health('torrentio-down') ? addon(streams, 'Torrentio') : [], health('torbox-down') ? service(streams, 'torbox') : [], health('realdebrid-down') ? service(streams, 'realdebrid') : [], health('premiumize-down') ? service(streams, 'premiumize') : [], health('torrin-down') ? service(streams, 'torrin') : [])",
     "enabled": true
   },
   {

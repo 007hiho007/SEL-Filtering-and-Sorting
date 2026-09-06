@@ -1,4 +1,11 @@
 # Changelog
+## 3.2.5 (2026-09-06)
+**New**
+- Auto-activation for Health Checks services using variants (ignore if you chose to keep your existing Variants during template import)
+  - If you're using `base config` installation: whenever torbox, premiumize, real-debrid, or torrin is down (I had to pick 4, there is a limit), that service will auto-disable itself so addons will not return any results from that down service.
+  - If you're not using `base config` or if you're not importing my variants at all: the fallback streams removal via SEL from v3.2.4 will still work as usual
+- Some minor edits to Health Checks ID naming so both the syncedESE and Health Checks page match and should work
+
 ## 3.2.4 (2026-09-05)
 **New**
 - Health Checks & synced ESE v2.1.7 incorporating these Health Checks
