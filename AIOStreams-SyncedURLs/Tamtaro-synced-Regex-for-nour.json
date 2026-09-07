@@ -1,0 +1,37 @@
+[
+  {
+    "expression": "/*#𝙵𝚘𝚛 𝙽𝚘𝚞𝚛: 𝙰𝚗𝚒𝚖𝚎 𝚂𝚞𝚋 𝙻𝚎𝚟𝚎𝚕𝚜 𝚟1.0.0 [𝚐𝚒𝚝.𝚝𝚊𝚖𝚝𝚊𝚛𝚘.𝚍𝚎]*/ []",
+    "score": 0,
+    "enabled": true
+  },
+  {
+    "expression": "/*MTL*/ isAnime? regexMatched(streams, 'L0') : []",
+    "score": -50,
+    "enabled": true
+  },
+  {
+    "expression": "/*L0*/ isAnime? regexMatched(streams, 'L0') : []",
+    "score": 50,
+    "enabled": true
+  },
+  {
+    "expression": "/*L1*/ isAnime? regexMatched(streams, 'L1') : []",
+    "score": 100,
+    "enabled": true
+  },
+  {
+    "expression": "/*L2*/ isAnime? regexMatched(streams, 'L2') : []",
+    "score": 300,
+    "enabled": true
+  },
+  {
+    "expression": "/*L3*/ isAnime? regexMatched(streams, 'L3') : []",
+    "score": 400,
+    "enabled": true
+  },
+  {
+    "expression": "/*L4*/ isAnime? regexMatched(streams, 'L4') : []",
+    "score": 500,
+    "enabled": true
+  }
+]
