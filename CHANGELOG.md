@@ -1,4 +1,16 @@
 # Changelog
+## 3.2.6 (2026-09-07)
+**New for Nour & fellow anime enjoyers**
+- Sub Levels Regex & RSE are here!
+  - https://git.tamtaro.de/for-nour-Regex.json & https://git.tamtaro.de/for-nour-RSE.json
+  - Sub levels are how nekoBT attempts to categorize the quality of a release's subtitles. The higher the sub level (from L0 to L4), the more extensive the work put into the subtitles. **Default** prioritizes higher sub levels, boosting their SEL scores up to 500. Disable under "Sorting Options"
+  - Debrid users: Must switch on "Leave Auto Title Tags in Filename" inside your nekoBT addon 
+    - this is enabled now by default if you import my Addon Preset again (just make the edit yourself; doing this will erase any other addons you personally added)
+  - Usenet users: ameNZB.moe, a free indexer with generous daily limits, has some releases with sub level tags
+
+**Update**
+- Health Checks variants now include P2P as backup when your Debrid service is down, *only if* you specifically enabled "Includes P2P Addons" inside "Addon Preset Modifications" menu of template
+
 ## 3.2.5 (2026-09-06)
 **New**
 - Auto-activation for Health Checks services using variants (ignore if you chose to keep your existing Variants during template import)
