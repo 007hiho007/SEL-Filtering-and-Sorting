@@ -1,0 +1,13 @@
+name: Notify on file change
+on:
+  push:
+    paths:
+      - 'Tamtaro-All-Templates-for-AIOStreams.json'
+      - 'AIOStreams-SyncedURLs/**'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -d "SEL-Filtering-and-Sorting: Datei geändert!" ntfy.sh/DEIN-TOPIC-NAME
