@@ -9,7 +9,12 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Build and send Discord message
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Commit-Übersicht bauen
+        id: summary
         run: |
           MSG=$(jq -r '
             .commits[] |
@@ -20,8 +25,28 @@ jobs:
             "🕒 " + .timestamp + "  ·  👤 " + .author.name + "\n" +
             "📝 " + (.message | split("\n")[0]) + "\n" +
             ($files | map("• " + .) | join("\n")) + "\n" +
-            "🔗 " + .url + "\n"
+            "🔗 " + .url
           ' "$GITHUB_EVENT_PATH")
+          echo "summary<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$MSG" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
-          jq -n --arg content "$MSG" '{content: $content}' | \
-          curl -H "Content-Type: application/json" -d @- "${{ secrets.DISCORD_WEBHOOK_URL }}"
+      - name: Diff bauen
+        id: diff
+        run: |
+          DIFF=$(git diff ${{ github.event.before }} ${{ github.sha }} -- AIOStreams-SyncedURLs Tamtaro-All-Templates-for-AIOStreams.json)
+          if [ ${#DIFF} -gt 1400 ]; then
+            DIFF="${DIFF:0:1400}
+... (gekürzt – vollständiger Diff über den Commit-Link oben)"
+          fi
+          echo "diff<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$DIFF" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Discord benachrichtigen
+        run: |
+          jq -n \
+            --arg summary "${{ steps.summary.outputs.summary }}" \
+            --arg diff "${{ steps.diff.outputs.diff }}" \
+            '{content: ($summary + "\n```diff\n" + $diff + "\n```")}' \
+          | curl -H "Content-Type: application/json" -d @- "${{ secrets.DISCORD_WEBHOOK_URL }}"
