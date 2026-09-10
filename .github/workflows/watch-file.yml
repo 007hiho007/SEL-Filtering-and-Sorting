@@ -10,4 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-           curl -d "SEL-Filtering-and-Sorting: Datei geändert!" ntfy.sh/sel-notify-kx82jd
+          curl -H "Content-Type: application/json" \
+          -d '{"content": "📄 SEL-Filtering-and-Sorting: Eine beobachtete Datei wurde geändert!"}' \
+          "${{ secrets.DISCORD_WEBHOOK_URL }}"
