@@ -9,7 +9,19 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl -H "Content-Type: application/json" \
-          -d '{"content": "📄 SEL-Filtering-and-Sorting: Eine beobachtete Datei wurde geändert!"}' \
-          "${{ secrets.DISCORD_WEBHOOK_URL }}"
+      - name: Build and send Discord message
+        run: |
+          MSG=$(jq -r '
+            .commits[] |
+            ((.added + .modified + .removed)
+              | map(select(startswith("AIOStreams-SyncedURLs/") or . == "Tamtaro-All-Templates-for-AIOStreams.json"))
+            ) as $files |
+            select($files | length > 0) |
+            "🕒 " + .timestamp + "  ·  👤 " + .author.name + "\n" +
+            "📝 " + (.message | split("\n")[0]) + "\n" +
+            ($files | map("• " + .) | join("\n")) + "\n" +
+            "🔗 " + .url + "\n"
+          ' "$GITHUB_EVENT_PATH")
+
+          jq -n --arg content "$MSG" '{content: $content}' | \
+          curl -H "Content-Type: application/json" -d @- "${{ secrets.DISCORD_WEBHOOK_URL }}"
