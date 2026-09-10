@@ -31,13 +31,12 @@ jobs:
           echo "$MSG" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-      - name: Diff bauen
+        - name: Diff bauen
         id: diff
         run: |
           DIFF=$(git diff ${{ github.event.before }} ${{ github.sha }} -- AIOStreams-SyncedURLs Tamtaro-All-Templates-for-AIOStreams.json)
           if [ ${#DIFF} -gt 1400 ]; then
-            DIFF="${DIFF:0:1400}
-... (gekürzt – vollständiger Diff über den Commit-Link oben)"
+            DIFF="${DIFF:0:1400}"$'\n'"... (gekürzt – vollständiger Diff über den Commit-Link oben)"
           fi
           echo "diff<<EOF" >> "$GITHUB_OUTPUT"
           echo "$DIFF" >> "$GITHUB_OUTPUT"
