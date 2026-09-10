@@ -12,3 +12,8 @@ jobs:
       - run: gh repo sync ${{ github.repository }} --source Tam-Taro/SEL-Filtering-and-Sorting
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Discord-Hinweis bei fehlgeschlagenem Sync
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" -d '{"content": "⚠️ Sync mit Tam-Taros Original ist fehlgeschlagen – vermutlich Konflikt mit deiner eigenen Änderung. Bitte manuell prüfen."}' "${{ secrets.DISCORD_WEBHOOK_URL }}"
