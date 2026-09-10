@@ -13,10 +13,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Commit-Uebersicht bauen
+         - name: Commit-Uebersicht bauen
         id: summary
         run: |
-          MSG=$(jq -r '.commits[] | ((.added + .modified + .removed) | map(select(startswith("AIOStreams-SyncedURLs/") or . == "Tamtaro-All-Templates-for-AIOStreams.json"))) as $files | select($files | length > 0) | ("🕒 " + .timestamp + "  ·  👤 " + .author.name + "\n📝 " + (.message | split("\n")[0]) + "\n" + ($files | map("• " + .) | join("\n")) + "\n🔗 " + .url)' "$GITHUB_EVENT_PATH")
+          MSG=$(jq -r '((.commits // []) as $c | if ($c | length) > 0 then ($c[] | ((.added + .modified + .removed) | map(select(startswith("AIOStreams-SyncedURLs/") or . == "Tamtaro-All-Templates-for-AIOStreams.json"))) as $files | select($files | length > 0) | ("🕒 " + .timestamp + "  ·  👤 " + .author.name + "\n📝 " + (.message | split("\n")[0]) + "\n" + ($files | map("• " + .) | join("\n")) + "\n🔗 " + .url)) else ("📄 Datei wurde geändert. Vergleich: " + .compare) end)' "$GITHUB_EVENT_PATH")
           echo "summary<<EOF" >> "$GITHUB_OUTPUT"
           echo "$MSG" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
