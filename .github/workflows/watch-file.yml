@@ -33,5 +33,8 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Discord benachrichtigen
+        env:
+          SUMMARY: ${{ steps.summary.outputs.summary }}
+          DIFF: ${{ steps.diff.outputs.diff }}
         run: |
-          jq -n --arg summary "${{ steps.summary.outputs.summary }}" --arg diff "${{ steps.diff.outputs.diff }}" '{content: ($summary + "\n```diff\n" + $diff + "\n```")}' | curl -H "Content-Type: application/json" -d @- "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          jq -n --arg summary "$SUMMARY" --arg diff "$DIFF" '{content: ($summary + "\n```diff\n" + $diff + "\n```")}' | curl -H "Content-Type: application/json" -d @- "${{ secrets.DISCORD_WEBHOOK_URL }}"
