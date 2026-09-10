@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          curl -d "SEL-Filtering-and-Sorting: Datei geändert!" ntfy.sh/DEIN-TOPIC-NAME
+           curl -d "SEL-Filtering-and-Sorting: Datei geändert!" ntfy.sh/sel-notify-kx82jd
